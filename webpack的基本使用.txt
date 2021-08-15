@@ -1,0 +1,30 @@
+# 在项目中配置webpack
+1.在项目根目录中，创建名为webpack.config.js的webpack文件，并初始化如下的基本配置
+module.exports = {
+  mode: 'development' // mode用来指定构建模式，可选值有，development和production
+}
+
+2.在package.json的script节点下，新增dev脚本如下
+"script": {
+  'dev': "webpack" // script节点下的脚本，可以通过npm run执行，例如，npm run dev
+}
+
+3.安装webpack相关的包
+npm install webpack@5.5.1 webpackcli@4.2.0 -D
+
+## mode的可选值
+mode节点的可选值有两个，分别是
+1.development
+* 开发环境
+* 不会对打包生成的文件进行代码压缩和性能优化
+* 打包速度快，适合在开发阶段使用
+
+2.production
+* 生产环境
+* 会对打包生成的文件进行代码压缩和性能优化
+* 打包速度慢，仅适合在项目发布阶段使用
+
+## webpack.config.js文件的作用
+是webpack的配置文件，webpack在真正开始打包构建之前，会先读取这个配置文件，从而基于给定的配置，对项目进行打包
+
+注意：webpack是基于node.js开发出来的打包工具，因此它的配置文件中，支持使用node.js相关的语法和模板进行webpack的个性化配置

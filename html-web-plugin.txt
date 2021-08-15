@@ -1,0 +1,28 @@
+# html-webpack-plugin
+是webpack中的html插件，可以通过此插件自定制index.html页面的椰蓉
+
+通过html-webpack-plugin插件，将src目录下的index.html首页，复制到项目根目录中一份
+
+# 1.安装html-webpack-plugin
+npm install html-webpack-plugin@4.5.0 -D
+
+# 2.配置html-webpack-plugin
+// 1.导入html插件，得到一个构造函数
+const HtmlPlugin = require('html-webpack-plugin')
+
+// 2.创建HTML插件的实例对象
+const htmlPlugin = new HtmlPlugin ({
+  template：'./src/index.html' // 复制文件的路径
+  filename：'./index.html' // 指定生成的文件存放路径
+})
+
+module.exports = {
+  mode: 'development',
+  plugins: [htmlPlugin ] // 通过plugins节点，使htmlPlugin插件生效
+}
+
+
+## 疑惑
+1. 通过html插件复制到项目根目录中的index.html页面，也被放到了内存中
+2. html插件在生成的index.html页面的底部，自动注入了打包的bundle.js
+3. 删除dist目录不影响项目的正常运行

@@ -1,0 +1,8 @@
+# devServer节点
+在webpack.config.js配置文件中，可以通过devServer节点对webpack-dev-server插件进行更多的配置
+
+devServer: {
+  open: true // 初次打包完成惠州，自动打开浏览器
+  host: '127.0.0.1' // 实时打包所使用的主机地址
+  port: 80 //实时打包所使用的端口号
+}

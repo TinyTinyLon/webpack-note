@@ -1,0 +1,12 @@
+最近在学习webpack   需要用到html-webpack-plugin插件时    出现以下报错
+webpack TypeError: The ‘compilation‘ argument must be an instance of Compilation
+
+解决方案：
+
+1.卸载webpack5
+
+npm uninstall webpack -g（卸载完注意是看一下package.json）
+
+2.下载webpack4
+
+npm install webpack@4.44.2 -g
