@@ -1,0 +1,27 @@
+# 为什么要打包发布？
+项目开发完成之后，使用webpack对项目进行打包发布的主要原因有以下两点：
+1. 开发环境下，打包生成的的文件存放在内存中，无法获取到最终打包生成的文件
+2. 开发环境下，打包生成的文件不会进行代码压缩和性能额优化
+
+## 配置webpack的打包发布
+在package.json文件的scripts节点下，新增build命令：
+“scripts”:{
+  'build': 'webpack --mode production' // 项目发布时，运行build命令
+}
+
+--mode是一个参数项，用来指定webpack的运行模式。production代表生产环境，会对打包生成的文件进行代码压缩和性能优化
+
+注意：通过 --mode指定的参数项，会覆盖掉webpack.config.js中的model选项
+
+
+## 自动清理dist目录下的旧文件
+为了在每次打包发布时自动清理掉dist目录中的旧文件，可以安装并配置clean-webpack-plugin插件：
+1.安装清理dist目录的webpack插件
+npm install clean-webpack-plugin@3.0.0 -D
+
+2.按需导入插件，得到插件的构造函数之后，创建插件的实例对象
+const { CleanWebPlugin } = require('clean-webpack-plugin')
+const cleanPlugin = new CleanWebpackPlugin()
+
+3. 把创建的cleanPlugin插件实例对象，挂载到plugins节点中
+plugins: [cleanPlugin ] // 挂载插件

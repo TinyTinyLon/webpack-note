@@ -1,0 +1,84 @@
+# 什么是loader
+在实际开发中，webpack默认只能打包处理以.js后缀名结尾的模块。其他非.js后缀名结尾的模块，webpack默认处理不了，需要调用loader加载器才可以正常打包，否则会报错
+
+# loader加载器的作用：协助webpack打包处理特定的文件模块。比如：
+* css-loader 可以打包处理.css相关的文件
+* less-loader可以打包处理.less相关的文件
+* babel-loader 可以打包处理webpack无法处理的高级js语法
+
+## 打包处理css文件
+1.运行npm i style-loader@2.0.0 css-loader@5.0.1 -D 命令，安装处理css文件的loader
+2. 在webpack.config.js的module -> rules数组中，添加loader规则如下：
+module：{
+  rules:[
+    { test: /\.css$/, use: ['style-loader', 'css-loader'] }
+  ]
+}
+其中，test表示匹配的文件类型，use表示对应要调用的loader
+注意： 
+* use数组中指定的loader顺序是固定的
+* 多个loader的调用顺序是：从后往前调用
+
+## 打包处理less文件
+1. 运行npm i less-loader@7.1.0 less@3.12.2 -D命令
+2. 在webpack.config.js的module -> rules数组中，添加loader规则如下
+module: {
+  rules: [
+    { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }
+  ]
+}
+
+## 打包处理样式表中与url路径相关的文件
+1. 运行npm i url-loader@4.1.1 file-loader@6.2.0 -D命令
+2. 在webpack.config.js的module -> rules数组中，添加loader规则
+module: {
+  rules: [
+    { test: /\.jpg|png|gif$/, use: 'url-loader?limit=2229' }
+  ]
+}
+
+其中的？之后的loader的参数项
+* limit用来指定图片的大小，单位是字节（byte）
+* 只有<=limit大小的图片，才会被转为base64格式的图片
+
+## loader的另一种配置方式
+带参数项的loader还可以通过对象的方式进行配置
+module： {
+  rules：[
+     {
+       test: /\.jpg|png|gif$/,
+     use: {
+	loader: 'url-loader', // 通过loader属性指定要调用的loader
+ 	options: { // 通过options属性指定参数项
+		limit: 2229
+	}
+	
+	}
+	}
+]
+}
+
+
+## 配置babel-loader
+webpack只能打包一部分高级的JavaScript语法，对于那些webpack无法处理的高级js语法，需要借助babel-loader进行打包处理。
+
+1. 安装babel-loader相关的包
+运行如下命令安装对应的依赖包
+npm i babel-loader@8.2.1 @babel/core@7.12.3 @babel/plugin-proposal-class-properties@7.12.1 -D
+
+包名称及版本号列表如下：
+babel-loader@8.2.1
+@babel-core@7.12.3
+@babel/plugin-proposal-class-properties@7.12.1
+
+2. 在webpack.config.js的module->rules数组中，添加loader规则如下
+{
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+    plugins: ['@babel/plugin-proposal-class-properties']
+  }
+  }
+}
